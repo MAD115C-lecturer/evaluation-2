@@ -10,18 +10,30 @@ progressCircle.style.strokeDashoffset = circumference;
 const targetDate = new Date('2024-10-24T17:45:00').getTime();
 const totalDuration = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
-// Start the countdown automatically as the target time is now
+// Check if the current time has reached or passed the target date
 function checkTime() {
   const currentTime = new Date().getTime();
 
   if (currentTime >= targetDate) {
-    startCountdown();
+    startCountdown(); // Automatically start the countdown when the target date is reached
     startButton.disabled = false; // Enable the button when countdown starts
-    startButton.textContent = 'Start'; // Change button text to "Start"
+    startButton.textContent = 'Start Test'; // Change button text to "Start Test"
+  } else {
+    // If the current time hasn't reached the target date, show the time until the countdown starts
+    const timeUntilStart = targetDate - currentTime;
+    const hours = Math.floor((timeUntilStart % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeUntilStart % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((timeUntilStart % (1000 * 60)) / 1000);
+    
+    // Display countdown until the test is available
+    countdownElement.textContent = `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+
+    // Recheck every second
+    setTimeout(checkTime, 1000);
   }
 }
 
-// Start the countdown
+// Start the countdown for the test duration (2 hours)
 function startCountdown() {
   const endTime = targetDate + totalDuration;
 
@@ -32,40 +44,36 @@ function startCountdown() {
     if (timeLeft <= 0) {
       clearInterval(mainInterval);
       countdownElement.textContent = '00:00:00';
-      setProgress(100);
+      setProgress(100); // Full progress when countdown reaches 0
       return;
     }
 
-    // Calculate hours, minutes, and seconds
-    const hours = Math.floor(
-      (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
+    const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
-    // Display countdown
-    countdownElement.textContent = `${hours < 10 ? '0' : ''}${hours}:${
-      minutes < 10 ? '0' : ''
-    }${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    // Update the countdown display
+    countdownElement.textContent = `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 
-    // Update progress circle
+    // Update progress circle based on the elapsed time
     const elapsedTime = now - targetDate;
     const progressPercent = (elapsedTime / totalDuration) * 100;
     setProgress(progressPercent);
   }, 1000);
 }
 
+// Set the progress of the circle
 function setProgress(percent) {
   const offset = circumference - (percent / 100) * circumference;
   progressCircle.style.strokeDashoffset = offset;
 }
 
-// Start the countdown immediately since the time is now
+// Initial time check to start the countdown at the correct time
 checkTime();
 
-// Button functionality
+// Button functionality - controls only redirection
 startButton.addEventListener('click', function () {
-  if (startButton.textContent === 'Start') {
+  if (startButton.textContent === 'Start Test') {
     window.open(
       'https://form.jotform.com/gomolemosibiyadev/mad115c-evaluation-2',
       '_blank'
