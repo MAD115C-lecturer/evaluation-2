@@ -6,8 +6,8 @@ const circumference = 2 * Math.PI * radius;
 progressCircle.style.strokeDasharray = `${circumference}`;
 progressCircle.style.strokeDashoffset = circumference;
 
-// Date and time setup: Set the target date to current time to activate immediately
-const targetDate = new Date().getTime(); // Current time
+// Set target date to 24 October 2024, 17:45
+const targetDate = new Date('2024-10-24T17:45:00').getTime();
 const totalDuration = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
 // Start the countdown automatically as the target time is now
