@@ -7,7 +7,7 @@ progressCircle.style.strokeDasharray = `${circumference}`;
 progressCircle.style.strokeDashoffset = circumference;
 
 // Set target date to 24 October 2024, 17:45
-const targetDate = new Date('2024-10-24T17:45:00').getTime();
+const targetDate = new Date('2024-10-29T17:45:00').getTime();
 const totalDuration = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
 // Check if the current time has reached or passed the target date
@@ -75,7 +75,7 @@ checkTime();
 startButton.addEventListener('click', function () {
   if (startButton.textContent === 'Start Test') {
     window.open(
-      'https://form.jotform.com/gomolemosibiyadev/mad115c-evaluation-2',
+      'https://form.jotform.com/243023737154048',
       '_blank'
     );
   }
